@@ -3,13 +3,13 @@
 A webpage inliner in Python
 
 This script works by checking what external CSS and JS resources (css, javascript)
-a webpage references, downloads and inlines them, using [Google's Gumbo HTML5 parser](https://github.com/google/gumbo-parser). At which point it's trivial to grep for interesting patterns over a page.
+a webpage references, downloads and inlines them, using [Google's Gumbo HTML5 parser](https://github.com/google/gumbo-parser).
+
+The result is printed to STDOUT, at which point it's trivial to pipe into grep (or whatever) for interesting patterns over a page.
 
 It could possibly do more interesting things in the future:
 
 TODO: ability to beautify (i.e., un-minify) CSS. (is this WIP? https://github.com/einars/js-beautify/tree/master/python/cssbeautifier)
-
-TODO: Be able to point to a URL, not just a local file.
 
 ## Getting this to work
 
@@ -29,10 +29,10 @@ I had to install `libtool`, `automake`, and `autoconf` with `brew` to make this 
 
 ## Usage
 
-`python inliner.py example/index.html example/out.html`
+`python inliner.py http://andyshora.com/promises-angularjs-explained-as-cartoon.html`
 
 This will inline the file as is.
 
-`python inliner.py -b example/index.html example/out.html`
+`python inliner.py -b example/index.html`
 
 This will beautify the JavaScript, then inline it.

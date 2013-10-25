@@ -3,6 +3,8 @@
 # -*- coding: utf-8 -*-
 # vim:tabstop=4:expandtab:sw=4:softtabstop=4
 
+from __future__ import print_function
+from BeautifulSoup import Tag
 import argparse
 import base64
 import feedparser
@@ -13,7 +15,6 @@ import re
 import sys
 import urllib2
 import urlparse
-from BeautifulSoup import Tag
 
 
 def is_remote(address):
@@ -86,8 +87,8 @@ def replaceJavascript(base_url, soup):
             script_tag.insert(0, real_js)
             js.replaceWith(script_tag)
         except Exception, e:
-            print 'failed to load javascript from %s' % js['src']
-            print e
+            print('failed to load javascript from %s' % js['src'])
+            print(e)
 
 css_url = re.compile(ur'url\((.+)\)')
 
@@ -102,25 +103,22 @@ def replaceCss(base_url, soup):
             css.replaceWith(style_tag)
 
         except Exception, e:
-            print 'failed to load css from %s' % css['href']
-            print e
+            print('failed to load css from %s' % css['href'])
+            print(e)
 
 
-def main(url, output_filename):
+def main(url):
     soup = gumbo.soup_parse(get_content(url))
 
     replaceJavascript(url, soup)
     replaceCss(url, soup)
 
-    res = open(output_filename, 'wb')
-    print >>res, str(soup)
-    res.close()
+    print(str(soup), file=sys.stdout)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-b', '--beautify', action='store_true',
                         help='Beautify (unminify) the JS')
     parser.add_argument('in_file', help='HTML file to inline')
-    parser.add_argument('out_file', help='output as HTML')
     args = parser.parse_args()
-    main(args.in_file, args.out_file)
+    main(args.in_file)
