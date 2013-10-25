@@ -105,26 +105,10 @@ def replaceCss(base_url, soup):
                     print e
                     return u''
 
-            css.replaceWith(u'<style>%s</style>' % re.sub(css_url, replacer,
-                                                          real_css))
+            css.replaceWith(u'<style>%s</style>' % real_css)
 
         except Exception, e:
             print 'failed to load css from %s' % css['href']
-            print e
-
-
-def replaceImages(base_url, soup):
-    from itertools import chain
-
-    for img in chain(soup.findAll('img', {'src': re.compile('.+')}),
-                     soup.findAll('input', {'type': 'image',
-                                            'src': re.compile('.+')})):
-        try:
-            path = resolve_path(base_url, img['src'])
-            real_img = get_content(path, True)
-            img['src'] = data_encode_image(path.lower(), real_img)
-        except Exception, e:
-            print 'failed to load image from %s' % img['src']
             print e
 
 
@@ -133,7 +117,6 @@ def main(url, output_filename):
 
     replaceJavascript(url, bs)
     replaceCss(url, bs)
-    replaceImages(url, bs)
 
     res = open(output_filename, 'wb')
     print >>res, str(bs)
