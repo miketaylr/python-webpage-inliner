@@ -7,7 +7,8 @@ a webpage references, downloads and inlines them, using [Google's Gumbo HTML5 pa
 
 It could possibly do more interesting things in the future:
 
-TODO: ability to beautify (i.e., un-minify) CSS.
+TODO: ability to beautify (i.e., un-minify) CSS. (is this WIP? https://github.com/einars/js-beautify/tree/master/python/cssbeautifier)
+
 TODO: Be able to point to a URL, not just a local file.
 
 ## Getting this to work
