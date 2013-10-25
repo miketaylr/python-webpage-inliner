@@ -11,7 +11,7 @@ It could possibly do more interesting things in the future.
 
 1) Install dependencies
 
-* `pip install BeautifulSoup`
+* `pip install BeautifulSoup` (Gumbo has a BeautifulSoup adapter, which is super easy to work with).
 * `pip install feedparser`
 * `git submodule init && git submodule update`
 
