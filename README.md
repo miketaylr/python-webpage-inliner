@@ -9,9 +9,9 @@ a webpage references, downloads and inlines them. It could possibly do more inte
 
 1) Install dependencies
 
-`pip install BeautifulSoup`
-`pip install feedparser`
-`git submodule init && git submodule update`
+- `pip install BeautifulSoup`
+- `pip install feedparser`
+- `git submodule init && git submodule update`
 
 2) Build Gumbo. See their [README](https://github.com/google/gumbo-parser/blob/master/README.md)
 
