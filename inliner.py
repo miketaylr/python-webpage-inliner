@@ -3,6 +3,7 @@
 # -*- coding: utf-8 -*-
 # vim:tabstop=4:expandtab:sw=4:softtabstop=4
 
+import argparse
 import base64
 import feedparser
 import gumbo
@@ -16,11 +17,6 @@ from BeautifulSoup import Tag
 
 def is_remote(address):
     return urlparse.urlparse(address)[0] in ('http', 'https')
-
-
-def data_encode_image(name, content):
-    return u'data:%s;base64,%s' % (mimetypes.guess_type(name)[0],
-                                   base64.standard_b64encode(content))
 
 
 def ignore_url(address):
