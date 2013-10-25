@@ -11,6 +11,7 @@ import re
 import sys
 import urllib2
 import urlparse
+from BeautifulSoup import Tag
 
 
 def is_remote(address):
@@ -79,7 +80,9 @@ def replaceJavascript(base_url, soup):
     for js in soup.findAll('script', {'src': re.compile('.+')}):
         try:
             real_js = get_content(resolve_path(base_url, js['src']))
-            js.replaceWith(u'<script>%s</script>' % real_js)
+            script_tag = Tag(soup, "script")
+            script_tag.insert(0, real_js)
+            js.replaceWith(script_tag)
         except Exception, e:
             print 'failed to load javascript from %s' % js['src']
             print e
@@ -92,19 +95,9 @@ def replaceCss(base_url, soup):
                                      'href': re.compile('.+')}):
         try:
             real_css = get_content(resolve_path(base_url, css['href']))
-
-            def replacer(result):
-                try:
-                    path = resolve_path(resolve_path(base_url, css['href']),
-                                        result.groups()[0])
-                    return u'url(%s)' % data_encode_image(path,
-                                                          get_content(path,
-                                                                      True))
-                except Exception, e:
-                    print e
-                    return u''
-
-            css.replaceWith(u'<style>%s</style>' % real_css)
+            style_tag = Tag(soup, "style")
+            style_tag.insert(0, real_css)
+            css.replaceWith(style_tag)
 
         except Exception, e:
             print 'failed to load css from %s' % css['href']
