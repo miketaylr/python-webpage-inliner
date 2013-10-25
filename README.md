@@ -7,7 +7,8 @@ a webpage references, downloads and inlines them, using [Google's Gumbo HTML5 pa
 
 It could possibly do more interesting things in the future:
 
-TODO: ability to beautify (i.e., un-minify) JavaScript and CSS.
+TODO: ability to beautify (i.e., un-minify) CSS.
+TODO: Be able to point to a URL, not just a local file.
 
 ## Getting this to work
 
@@ -24,3 +25,13 @@ I had to install `libtool`, `automake`, and `autoconf` with `brew` to make this 
 
 3) Install Gumbo Python bindings
 `sudo python setup.py install` (from gumbo dir, but you already knew that because you read the [README](https://github.com/google/gumbo-parser/blob/master/README.md).
+
+## Usage
+
+`python inliner.py example/index.html example/out.html`
+
+This will inline the file as is.
+
+`python inliner.py -b example/index.html example/out.html`
+
+This will beautify the JavaScript, then inline it.
