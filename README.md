@@ -15,6 +15,7 @@ TODO: ability to beautify (i.e., un-minify) JavaScript and CSS.
 
 * `pip install BeautifulSoup` (Gumbo has a BeautifulSoup adapter, which is super easy to work with).
 * `pip install feedparser`
+* `pip install jsbeautifier`
 * `git submodule init && git submodule update`
 
 2) Build Gumbo. See their [README](https://github.com/google/gumbo-parser/blob/master/README.md).

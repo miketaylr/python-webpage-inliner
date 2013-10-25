@@ -7,6 +7,7 @@ import argparse
 import base64
 import feedparser
 import gumbo
+import jsbeautifier
 import mimetypes
 import re
 import sys
@@ -76,6 +77,11 @@ def replaceJavascript(base_url, soup):
     for js in soup.findAll('script', {'src': re.compile('.+')}):
         try:
             real_js = get_content(resolve_path(base_url, js['src']))
+            if args.beautify:
+                opts = jsbeautifier.default_options()
+                opts.indent_size = 2
+                opts.indent_with_tabs = False
+                real_js = jsbeautifier.beautify(real_js, opts)
             script_tag = Tag(soup, "script")
             script_tag.insert(0, real_js)
             js.replaceWith(script_tag)
@@ -111,4 +117,10 @@ def main(url, output_filename):
     res.close()
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-b', '--beautify', action='store_true',
+                        help='Beautify (unminify) the JS')
+    parser.add_argument('in_file', help='HTML file to inline')
+    parser.add_argument('out_file', help='output as HTML')
+    args = parser.parse_args()
+    main(args.in_file, args.out_file)
