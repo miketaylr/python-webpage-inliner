@@ -42,15 +42,15 @@ def get_content(from_, expect_binary=False):
         ct = urllib2.urlopen(from_)
         if not expect_binary:
             s = ct.read()
-            encodings = feedparser._getCharacterEncoding(ct.headers, s)
-            return unicode(s, encodings[0])
+            encodings = feedparser.convert_to_utf8(ct.headers, s)
+            return unicode(s, encodings[1])
         else:
             return ct.read()
     else:
         s = open(from_).read()
         if not expect_binary:
-            encodings = feedparser._getCharacterEncoding({}, s)
-            return unicode(s, encodings[0])
+            encodings = feedparser.convert_to_utf8({}, s)
+            return unicode(s, encodings[1])
         else:
             return s
 
