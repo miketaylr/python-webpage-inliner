@@ -11,7 +11,6 @@ import re
 import sys
 import urllib2
 import urlparse
-from BeautifulSoup import BeautifulSoup
 
 
 def is_remote(address):
@@ -113,13 +112,13 @@ def replaceCss(base_url, soup):
 
 
 def main(url, output_filename):
-    bs = BeautifulSoup(get_content(url))
+    soup = gumbo.soup_parse(get_content(url))
 
-    replaceJavascript(url, bs)
-    replaceCss(url, bs)
+    replaceJavascript(url, soup)
+    replaceCss(url, soup)
 
     res = open(output_filename, 'wb')
-    print >>res, str(bs)
+    print >>res, str(soup)
     res.close()
 
 if __name__ == '__main__':
