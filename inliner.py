@@ -22,6 +22,8 @@ def is_remote(address):
 
 
 def ignore_url(address):
+    '''Don't bother inlining any assets that come from the following blacklisted
+    sites. Unsure how useful this is right now.'''.
     url_blacklist = ('getsatisfaction.com',
                      'google-analytics.com')
 
@@ -75,6 +77,9 @@ def resolve_path(base, target):
 
 
 def replaceJavascript(base_url, soup):
+    '''Fetch the contents of an external script and write that to an inline
+    script element. If the [-b] flag is passed in, the JS will be beautified
+    using jsbeautifier.'''
     for js in soup.findAll('script', {'src': re.compile('.+')}):
         try:
             real_js = get_content(resolve_path(base_url, js['src']))
@@ -90,10 +95,10 @@ def replaceJavascript(base_url, soup):
             print('failed to load javascript from %s' % js['src'])
             print(e)
 
-css_url = re.compile(ur'url\((.+)\)')
-
 
 def replaceCss(base_url, soup):
+    '''Fetch the contents of an external link and write that to an inline
+    style element. For now the CSS is left as is, without uncompressing.'''
     for css in soup.findAll('link', {'rel': 'stylesheet',
                                      'href': re.compile('.+')}):
         try:
@@ -108,6 +113,8 @@ def replaceCss(base_url, soup):
 
 
 def main(url):
+    '''Parse the HTML source with the Gumbo HTML5 parser and inline the CSS and
+    JS assets. Results are printed to STDOUT.'''
     soup = gumbo.soup_parse(get_content(url))
 
     replaceJavascript(url, soup)
