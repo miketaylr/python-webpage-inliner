@@ -23,7 +23,7 @@ def is_remote(address):
 
 def ignore_url(address):
     '''Don't bother inlining any assets that come from the following blacklisted
-    sites. Unsure how useful this is right now.'''.
+    sites. Unsure how useful this is right now.'''
     url_blacklist = ('getsatisfaction.com',
                      'google-analytics.com')
 
