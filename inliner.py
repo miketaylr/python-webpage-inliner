@@ -7,13 +7,12 @@ from __future__ import print_function
 from BeautifulSoup import Tag
 import argparse
 import base64
-import feedparser
 import gumbo
 import jsbeautifier
 import mimetypes
 import re
+import requests
 import sys
-import urllib2
 import urlparse
 
 
@@ -34,25 +33,14 @@ def ignore_url(address):
     return False
 
 
-def get_content(from_, expect_binary=False):
+def get_content(from_):
     if is_remote(from_):
         if ignore_url(from_):
             return u''
-
-        ct = urllib2.urlopen(from_)
-        if not expect_binary:
-            s = ct.read()
-            encodings = feedparser.convert_to_utf8(ct.headers, s)
-            return unicode(s, encodings[1])
-        else:
-            return ct.read()
+        r = requests.get(from_)
+        return r.content
     else:
-        s = open(from_).read()
-        if not expect_binary:
-            encodings = feedparser.convert_to_utf8({}, s)
-            return unicode(s, encodings[1])
-        else:
-            return s
+        return open(from_).read()
 
 
 def resolve_path(base, target):
@@ -120,7 +108,7 @@ def main(url):
     replaceJavascript(url, soup)
     replaceCss(url, soup)
 
-    print(str(soup), file=sys.stdout)
+    print(soup, file=sys.stdout)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
