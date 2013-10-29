@@ -23,23 +23,8 @@ def is_remote(address):
     return urlparse.urlparse(address)[0] in ('http', 'https')
 
 
-def ignore_url(address):
-    '''Don't bother inlining any assets that come from the following
-    blacklisted sites. Unsure how useful this is right now.'''
-    url_blacklist = ('getsatisfaction.com',
-                     'google-analytics.com')
-
-    for bli in url_blacklist:
-        if address.find(bli) != -1:
-            return True
-
-    return False
-
-
 def get_content(from_):
     if is_remote(from_):
-        if ignore_url(from_):
-            return u''
         r = requests.get(from_, headers={'User-Agent': FF25})
         return r.content
     else:
