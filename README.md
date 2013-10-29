@@ -14,11 +14,8 @@ TODO: ability to beautify (i.e., un-minify) CSS. (is this WIP? https://github.co
 ## Getting this to work
 0) `git clone git@github.com:miketaylr/urlgrep.git && cd urlgrep`
 
-1) Install dependencies
-
-* `pip install BeautifulSoup` (Gumbo has a BeautifulSoup adapter, which is super easy to work with).
-* `pip install feedparser`
-* `pip install jsbeautifier`
+1) Install dependencies, grab Gumbo submodule
+* `pip install -r requirements.txt`
 * `git submodule init && git submodule update`
 
 2) Build Gumbo. See their [README](https://github.com/google/gumbo-parser/blob/master/README.md).
