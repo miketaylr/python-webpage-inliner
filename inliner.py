@@ -15,14 +15,17 @@ import requests
 import sys
 import urlparse
 
+FF25 = ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) '
+        'Gecko/20100101 Firefox/25.0')
+
 
 def is_remote(address):
     return urlparse.urlparse(address)[0] in ('http', 'https')
 
 
 def ignore_url(address):
-    '''Don't bother inlining any assets that come from the following blacklisted
-    sites. Unsure how useful this is right now.'''
+    '''Don't bother inlining any assets that come from the following
+    blacklisted sites. Unsure how useful this is right now.'''
     url_blacklist = ('getsatisfaction.com',
                      'google-analytics.com')
 
@@ -37,7 +40,7 @@ def get_content(from_):
     if is_remote(from_):
         if ignore_url(from_):
             return u''
-        r = requests.get(from_)
+        r = requests.get(from_, headers={'User-Agent': FF25})
         return r.content
     else:
         return open(from_).read()
