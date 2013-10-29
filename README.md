@@ -12,6 +12,7 @@ It could possibly do more interesting things in the future:
 TODO: ability to beautify (i.e., un-minify) CSS. (is this WIP? https://github.com/einars/js-beautify/tree/master/python/cssbeautifier)
 
 ## Getting this to work
+0) `git clone git@github.com:miketaylr/urlgrep.git && cd urlgrep`
 
 1) Install dependencies
 
