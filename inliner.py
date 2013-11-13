@@ -17,6 +17,7 @@ import urlparse
 
 FF25 = ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) '
         'Gecko/20100101 Firefox/25.0')
+FAIL = '\033[91m'
 
 
 def is_remote(address):
@@ -68,7 +69,8 @@ def replaceJavascript(base_url, soup):
             script_tag.insert(0, real_js)
             js.replaceWith(script_tag)
         except Exception, e:
-            print('failed to load javascript from %s' % js['src'])
+            print(FAIL + 'Failed to load javascript from %s\033[0m' %
+                  js['src'])
             print(e)
 
 
@@ -84,7 +86,7 @@ def replaceCss(base_url, soup):
             css.replaceWith(style_tag)
 
         except Exception, e:
-            print('failed to load css from %s' % css['href'])
+            print(FAIL + 'Failed to load css from %s\033[0m' % css['href'])
             print(e)
 
 
