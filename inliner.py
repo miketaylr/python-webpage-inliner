@@ -4,7 +4,6 @@
 # vim:tabstop=4:expandtab:sw=4:softtabstop=4
 
 from __future__ import print_function
-from BeautifulSoup import Tag
 import argparse
 import base64
 import gumbo
@@ -18,7 +17,6 @@ import urlparse
 FF25 = ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) '
         'Gecko/20100101 Firefox/25.0')
 FAIL = '\033[91m'
-
 
 def is_remote(address):
     return urlparse.urlparse(address)[0] in ('http', 'https')
@@ -65,9 +63,7 @@ def replaceJavascript(base_url, soup):
                 opts.indent_size = 2
                 opts.indent_with_tabs = False
                 real_js = jsbeautifier.beautify(real_js, opts)
-            script_tag = Tag(soup, "script")
-            script_tag.insert(0, real_js)
-            js.replaceWith(script_tag)
+            js.replaceWith("~script~\n" + real_js + "~/script~")
         except Exception, e:
             print(FAIL + 'Failed to load javascript from %s\033[0m' %
                   js['src'])
@@ -81,9 +77,7 @@ def replaceCss(base_url, soup):
                                      'href': re.compile('.+')}):
         try:
             real_css = get_content(resolve_path(base_url, css['href']))
-            style_tag = Tag(soup, "style")
-            style_tag.insert(0, real_css)
-            css.replaceWith(style_tag)
+            css.replaceWith("~style~\n" + real_css + "~/style~")
 
         except Exception, e:
             print(FAIL + 'Failed to load css from %s\033[0m' % css['href'])
